@@ -93,9 +93,10 @@ definitions:
         type: string
         description: "The name of the account"
         example: "My Bittex account"
-      venue_name:
+      brokerage_name:
         type: string
         description: "The name of the Venue (broker or exchange)"
+        example: "The name of the associated broker or exchange"
       active:
         type: boolean
         description: "Identify if the account is active or not"
@@ -134,6 +135,9 @@ definitions:
         description: Order Type
         example: "limit, market, or stop"
       quantity:
+        type: integer
+        format: int32
+      rate:
         type: integer
         format: int32
     xml:
