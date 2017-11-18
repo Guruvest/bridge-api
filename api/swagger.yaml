@@ -104,6 +104,7 @@ definitions:
       active:
         type: boolean
         description: "Identify if the account is active or not"
+# I would call it tradable, this is a bit confusing
       trade:
         type: boolean
         description: "Identify if the account is able to perform trades or not"
@@ -132,22 +133,30 @@ definitions:
         description: Symbol ID
         example: "A valid symbol ID"
       side:
+# could use Swagger enums
         type: string
         example: "buy or sell"
       type:
+# could use Swagger enums
         type: string
         description: Order Type
         example: "limit, market, or stop"
+# except if there is some multiplier magic somewhere (I would not do that) this should be decimal, not integer
       quantity:
         type: integer
         format: int32
+# except if there is some multiplier magic somewhere (I would not do that) this should be decimal, not integer
       rate:
         type: integer
         format: int32
+#other fields to be considered for adding:
+# - createdtime, finishtime
+# - requested volume (or quantity)
+# - volume filled so far
     xml:
       name: Order
-      
-  Exchange:
+
+Exchange:
     properties:
       id:
         type: integer
@@ -159,6 +168,7 @@ definitions:
       code:
         type: string
         description: "The code of the exchange/broker"
+# fee structures are way more complicated then a floating point number. I do not know how accurate we want to go with that, but surely more than this.
       fee:
         type: number
         format: float
@@ -166,12 +176,14 @@ definitions:
       url:
         type: string
         description: "The URL of the exchange/broker"
+# tradable maybe?
       trade:
         type: boolean
         description: "Identify if the exchange has trading capabilities enabled or not"
     xml:
       name: Exchange
-      
+
+#is this really called tick? I would call it candle. Tick (for me) is the smallest unit of change in the marketdata. Like the bidsize changing.      
   Tick:
     properties:
       exchange_code:
@@ -199,6 +211,7 @@ definitions:
       bid:
         type: number
         format: float
+#how will this be represented? UTC / exchange local / requester local?
       timestamp":
         type: string
         format: date-time
@@ -209,9 +222,12 @@ definitions:
     properties:
       symbol:
         type: string
+#Symbology is difficult. Exchanges randomly invent new codes for assets. Look at Kraken Bitcoin: XXBT...
+#Which symbology do we adopt? Stick to one + mapping needs to be done in the system between user facing calls and backend.
         description: Symbol ID
         example: "A valid symbol ID"
       quantity:
+#should be decimal again, like above
         type: integer
         format: int32
     xml:
@@ -261,6 +277,7 @@ paths:
       parameters:
         - name: limit
           in: query
+#in what situation would somebody want to limit the resultset here? I cannot imagine it would be ever used. "Give me back my first 3 accounts?"
           description: maximum number of results to return
           required: false
           type: integer
@@ -308,6 +325,8 @@ paths:
         "200":
           description: successful operation
           schema:
+#it would make sense to introduce an orderstatus enum, and allow query like that. "get me all the open orders"
+#arrays of orders in which direction? Time asc or desc?
             type: array
             items:
               $ref: "#/definitions/Order"
@@ -339,6 +358,7 @@ paths:
           format: int32
         - name: limit
           in: query
+#in what situation would somebody want to limit the resultset here? I cannot imagine it would be ever used. "Give me back my first 3 accounts?"
           description: maximum number of results to return
           required: false
           type: integer
@@ -370,6 +390,8 @@ paths:
       produces:
         - application/json
       parameters:
+#arrays of orders in which direction? Time asc or desc?
+#it would make sense to introduce an orderstatus enum, and allow query like that. "get me all the open orders"
         - name: limit
           in: query
           description: maximum number of results to return
@@ -436,6 +458,7 @@ paths:
       produces:
         - application/json
       parameters:
+#in what situation would somebody want to limit the resultset here?
         - name: limit
           in: query
           description: maximum number of results to return
@@ -458,6 +481,7 @@ paths:
             - "write:orders"
             - "read:orders"
   
+#this is going to fetch data from which exchange? 
   "/market/tickers/{symbol}":
     get:
       tags: ["Market Access"]
@@ -570,6 +594,7 @@ paths:
           schema:
             $ref: "#/definitions/Order"
       responses:
+#which error is going to represent "normal" failures? Like "order is already filled, cannot be updated".
         "200":
           description: Order updated successfully
         "400":
@@ -609,3 +634,7 @@ paths:
           description: unexpected error
           schema:
             $ref: '#/definitions/ErrorResponse'
+
+#I totally miss the "Trade" object. There must be an operation to query completed trades. A trade should be linked to an order, and represent a distinct fill on the pending order object.
+#Fields required are: volume, side (buy or sell), timestamp, applied fee, requested-price, fill-price (slippage?), notional traded
+      
