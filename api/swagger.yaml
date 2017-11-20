@@ -3,7 +3,7 @@
 swagger: "2.0"
 schemes:
   - "http"
-  - "https"
+  #- "https"
 produces:
   - "application/json"
 consumes:
@@ -606,6 +606,7 @@ paths:
       description: ""
       operationId: updateOrder
       parameters:
+        - $ref: '#/parameters/orderIdParam'
         - name: order
           in: body
           description: Order object that needs to be added to the order book
