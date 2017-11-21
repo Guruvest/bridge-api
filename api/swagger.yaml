@@ -71,13 +71,11 @@ tags:
 
 parameters:
   accountIdParam:
-    in: query 
-    #path
+    in: query
     name: account_id
     description: The linked account identifier
     type: integer
     format: int32
-    #required: true
   exchangeIdParam:
     in: query
     name: exchange_id
@@ -181,6 +179,10 @@ definitions:
         type: string
         enum: [buy, sell]
         example: "buy or sell"
+      strategy_id:
+        type: string
+        description: The identifier of the strategy to whom the order belongs to
+        example: "d0c5340b-6d6c-49d9-b567-48c4bfca13d2"
       type:
         type: string
         enum: [limit, market, stop]
@@ -346,6 +348,7 @@ definitions:
     xml:
       name: Symbol
 
+# Still missing the Strategy definition
       
 securityDefinitions:
   bridge_auth:
