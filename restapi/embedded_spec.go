@@ -642,6 +642,11 @@ func init() {
             "closed"
           ]
         },
+        "strategy_id": {
+          "description": "The identifier of the strategy to whom the order belongs to",
+          "type": "string",
+          "example": "d0c5340b-6d6c-49d9-b567-48c4bfca13d2"
+        },
         "symbol": {
           "description": "Symbol ID",
           "type": "string",

@@ -43,6 +43,9 @@ type Order struct {
 	// status
 	Status string `json:"status,omitempty"`
 
+	// The identifier of the strategy to whom the order belongs to
+	StrategyID string `json:"strategy_id,omitempty"`
+
 	// Symbol ID
 	Symbol string `json:"symbol,omitempty"`
 

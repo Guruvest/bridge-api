@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"github.com/alien45/bridge-api/models"
+	"github.com/Guruvest/bridge-api/models"
 )
 
 // NewAddOrderParams creates a new AddOrderParams object

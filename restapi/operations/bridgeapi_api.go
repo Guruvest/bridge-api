@@ -19,9 +19,9 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
-	"github.com/alien45/bridge-api/restapi/operations/account_data"
-	"github.com/alien45/bridge-api/restapi/operations/market_access"
-	"github.com/alien45/bridge-api/restapi/operations/system_info"
+	"github.com/Guruvest/bridge-api/restapi/operations/account_data"
+	"github.com/Guruvest/bridge-api/restapi/operations/market_access"
+	"github.com/Guruvest/bridge-api/restapi/operations/system_info"
 )
 
 // NewBridgeapiAPI creates a new Bridgeapi instance

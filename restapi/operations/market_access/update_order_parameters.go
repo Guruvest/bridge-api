@@ -14,7 +14,7 @@ import (
 
 	strfmt "github.com/go-openapi/strfmt"
 
-	"github.com/alien45/bridge-api/models"
+	"github.com/Guruvest/bridge-api/models"
 )
 
 // NewUpdateOrderParams creates a new UpdateOrderParams object

@@ -11,11 +11,10 @@ import (
 	middleware "github.com/go-openapi/runtime/middleware"
 	graceful "github.com/tylerb/graceful"
 
-	"github.com/alien45/bridge-api/restapi/operations"
-	"github.com/alien45/bridge-api/restapi/operations/account_data"
-	"github.com/alien45/bridge-api/restapi/operations/market_access"
-	"github.com/alien45/bridge-api/restapi/operations/system_info"
-	"github.com/alien45/bridge-api/models"
+	"github.com/Guruvest/bridge-api/restapi/operations"
+	"github.com/Guruvest/bridge-api/restapi/operations/account_data"
+	"github.com/Guruvest/bridge-api/restapi/operations/market_access"
+	"github.com/Guruvest/bridge-api/restapi/operations/system_info"
 )
 
 // This file is safe to edit. Once it exists it will not be overwritten
@@ -66,14 +65,7 @@ func configureAPI(api *operations.BridgeapiAPI) http.Handler {
 		return middleware.NotImplemented("operation account_data.GetLinkedAccounts has not yet been implemented")
 	})
 	api.MarketAccessGetOrderByIDHandler = market_access.GetOrderByIDHandlerFunc(func(params market_access.GetOrderByIDParams) middleware.Responder {
-		//return middleware.NotImplemented("operation market_access.GetOrderByID has not yet been implemented")
-		// ToDo: Remove sample before deploying
-		sampleOrder := models.Order{
-			ID: params.OrderID,
-			Quantity: 99.00,
-			Rate: 1.99,
-		}
-		return market_access.NewGetOrderByIDOK().WithPayload(&sampleOrder);
+		return middleware.NotImplemented("operation market_access.GetOrderByID has not yet been implemented")
 	})
 	api.AccountDataGetOrdersByAccountHandler = account_data.GetOrdersByAccountHandlerFunc(func(params account_data.GetOrdersByAccountParams, principal interface{}) middleware.Responder {
 		return middleware.NotImplemented("operation account_data.GetOrdersByAccount has not yet been implemented")
